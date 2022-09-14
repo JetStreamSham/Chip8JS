@@ -1,0 +1,44 @@
+.Display {
+    display: flex;
+    flex-direction: column;
+}
+
+.UserInput {
+    display: flex;
+    flex-direction: row;
+}
+
+.Debug {
+    display: flex;
+    flex-direction: row;
+    height: 350px;
+    max-height: 160px;
+    display: flex;
+    padding-block-end: 5px;
+}
+
+#Registers>tbody>tr:hover {
+    background-color: gray;
+}
+
+#Registers>tbody>tr>td>input {
+    width: 10ch;
+}
+
+#Stack>tbody>tr:hover {
+    background-color: gray;
+}
+
+#Stack>tbody>tr>td>input {
+    width: 10ch;
+}
+
+#Memory>tbody>tr>td>input {
+    max-width: 6ch;
+}
+
+#MemoryWrapper {
+    height: 45ch;
+    overflow: hidden;
+    overflow-y: scroll;
+}

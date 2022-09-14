@@ -1,0 +1,269 @@
+<html>
+
+<head>
+        <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+        <div class="Display">
+                <div class="Chip8Display">
+
+                        <canvas id="displayCanvas" width="320" height="160"></canvas>
+                </div>
+                <div class="UserInput">
+                        <div>
+                                <table>
+                                        <tbody>
+                                                <tr>
+                                                        <td><button onmouseup="KeyReleased(0xa)"
+                                                                        onclick="KeyPressed(0xa)">A</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0xb)"
+                                                                        onclick="KeyPressed(0xb)">B</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0xc)"
+                                                                        onclick="KeyPressed(0xc)">C</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0xd)"
+                                                                        onclick="KeyPressed(0xd)">D</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                </tr>
+                                                <tr>
+                                                        <td><button onmouseup="KeyReleased(0x1)"
+                                                                        onclick="KeyPressed(0x1)">1</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x2)"
+                                                                        onclick="KeyPressed(0x2)">2</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x3)"
+                                                                        onclick="KeyPressed(0x3)">3</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0xe)"
+                                                                        onclick="KeyPressed(0xe)">E</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                </tr>
+                                                <tr>
+                                                        <td><button onmouseup="KeyReleased(0x4)"
+                                                                        onclick="KeyPressed(0x4)">4</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x5)"
+                                                                        onclick="KeyPressed(0x5)">5</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x6)"
+                                                                        onclick="KeyPressed(0x6)">6</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0xf)"
+                                                                        onclick="KeyPressed(0xf)">F</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                </tr>
+                                                <tr>
+                                                        <td><button onmouseup="KeyReleased(0x7)"
+                                                                        onclick="KeyPressed(0x7)">7</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x8)"
+                                                                        onclick="KeyPressed(0x8)">8</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x9)"
+                                                                        onclick="KeyPressed(0x9)">9</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                        <td><button onmouseup="KeyReleased(0x0)"
+                                                                        onclick="KeyPressed(0x0)">0</button
+                                                                        onmouseup="KeyReleased(0xa)"></td>
+                                                </tr>
+                                        </tbody>
+                                </table>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                                <div>
+                                        <button onclick="Play()">Play</button>
+                                        <button onclick="Step()">Step</button>
+                                </div>
+                        </div>
+                </div>
+                <div class="LoadRom">
+                        Load a rom:
+                        <input type="file" id="romLoader" onchange="LoadRom()" />
+
+                </div>
+                <div class="Selector">
+                        <select>
+                                <option value="0">Editor</option>
+                                <option value="1">Debugger</option>
+                        </select>
+                </div>
+                <div class="Debug">
+                        <table>
+                                <tbody>
+                                        <tr>
+                                                <td>
+                                                        Registers
+                                                </td>
+                                                <td>
+                                                        Stack
+                                                </td>
+                                                <td>
+                                                        Memory
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>
+                                                        <table id="Registers">
+                                                                <tbody>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+
+                                                                </tbody>
+                                                        </table>
+                                                </td>
+                                                <td>
+                                                        <table id="Stack">
+                                                                <tbody>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td>1</td>
+                                                                                <td></td>
+                                                                        </tr>
+
+                                                                </tbody>
+                                                        </table>
+                                                </td>
+                                                <td>
+                                                        <div id="MemoryWrapper">
+
+                                                                <table id="Memory">
+                                                                </table>
+                                                        </div>
+                                                </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+
+
+        <script src="chip8.js"></script>
+        <script src="controller.js"></script>
+</body>
+
+</html>
