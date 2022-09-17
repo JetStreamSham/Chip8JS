@@ -1,0 +1,3 @@
+class ROM{
+    static roms = [];
+}

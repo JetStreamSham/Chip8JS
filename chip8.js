@@ -2,11 +2,11 @@
 class CHIP8 {
     constructor(rom) {
 
-        this.display = new Array(64, 32)
+        this.display = new Array(64*32)
         this.RAM = new Array(0xFFF)
         this.gpReg = new Array(16)
         this.iRegister = 0
-        this.delayReg = 0
+        this.delayRegister = 0
         this.soundRegister = 0
         this.programCounter = 0x200
 
@@ -109,7 +109,7 @@ class CHIP8 {
 
         if (rom != null) {
             if (rom.length > 0xfff) {
-                alert("File to big");
+                alert("File too big");
             }
             for (var i = 0; i < rom.length; i++) {
                 this.RAM[this.programCounter + i] = rom[i];
@@ -118,13 +118,23 @@ class CHIP8 {
 
     }
 
+    loadRom(romBinary){
+        if(romBinary.length > 0xfff){
+            alert("File too big");
+            return;
+        }
+        for (var i = 0; i < romBinary.length; i++) {
+            this.RAM[0x200 + i] = romBinary[i];
+        }
+    }
 
     step() {
         this.decode(this.RAM[this.programCounter]);
         this.programCounter += 2;
     }
     decode(pc) {
-        var inst = this.RAM[this.programCounter];
+        var inst = this.RAM[this.programCounter] << 8;
+        inst |= this.RAM[this.programCounter+1];
         switch ((inst >> 0xc)) {
             case 0x0:
                 {
@@ -339,7 +349,7 @@ class CHIP8 {
     }
 
     i1nnn(nnn) {
-        this.programCounter = nn;
+        this.programCounter = nnn;
     }
 
     i2nnn(nnn) {
@@ -469,7 +479,8 @@ class CHIP8 {
         x = this.gpReg[x];
         y = this.gpReg[y];
         for (var i = 0; i < n; i++) {
-            this.display[x][y + i] ^= this.RAM[this.iRegister + i];
+            var displayIndex = x + ((y+i)*64);
+            this.display[displayIndex] ^= this.RAM[this.iRegister + i];
         }
     }
 
@@ -487,7 +498,7 @@ class CHIP8 {
     }
 
     iFx07(x) {
-        this.gpReg[x] = this.delayReg;
+        this.gpReg[x] = this.delayRegister;
     }
 
     iFx0A(x) {
@@ -503,7 +514,7 @@ class CHIP8 {
     }
 
     iFx15(x) {
-        this.delayReg = this.gpReg[x];
+        this.delayRegister = this.gpReg[x];
     }
 
     iFx18(x) {

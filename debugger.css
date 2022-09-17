@@ -1,0 +1,66 @@
+.Container{
+    display: flex;
+    flex-direction: row;
+}
+
+.Display {
+    display: flex;
+    flex-direction: column;
+}
+.Chip8Display{
+    align-self: center;
+}
+.Input {
+    align-self: center;
+}
+
+.Options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#Debug {
+    display: flex;
+    flex-direction: row;
+    height: 350px;
+    max-height: 160px;
+    display: flex;
+    padding-block-end: 5px;
+}
+
+#Registers>tbody>tr:hover {
+    background-color: gray;
+}
+
+#Registers>tbody>tr>td>input {
+    width: 10ch;
+    text-align: right;
+}
+
+#Stack>tbody>tr:hover {
+    background-color: gray;
+}
+
+#Stack>tbody>tr>td>input {
+    width: 10ch;
+    text-align: right;
+}
+
+#Memory{
+    max-width: 124ch;
+    max-height: 124ch;
+}
+#Memory>tbody>tr>td>input {
+    max-width: 6ch;
+    text-align: right;
+}
+
+#MemoryWrapper {
+    height: 45ch;
+    width: 70ch;
+    overflow: hidden;
+    overflow: scroll;
+    align-items: baseline;
+}
