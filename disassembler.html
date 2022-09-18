@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <title>
+        CHIP8 Disassembler
+    </title>
+    <link rel="stylesheet" href="disassembler.css" />
+</head>
+
+
+<body>
+
+    <input onchange="LoadRom()" id="loadRom" type="file"></input>
+    <table>
+        <thead>            
+            <th>
+                Address
+            </th>
+            <th>
+                Bytes
+            </th>
+            <th>
+                Opcode
+            </th>
+        </thead>
+        <tbody id="asmTable">
+
+        </tbody>
+    </table>
+
+    <script src="disassembler.js"></script>
+</body>
+</html>

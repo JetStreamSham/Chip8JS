@@ -1,0 +1,9 @@
+.OpcodeEntry{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+tr{
+    height: 1ch;
+}

@@ -2,7 +2,7 @@
 class CHIP8 {
     constructor(rom) {
 
-        this.display = new Array(64*32)
+        this.display = new Array(64 * 32)
         this.RAM = new Array(0xFFF)
         this.gpReg = new Array(16)
         this.iRegister = 0
@@ -118,8 +118,8 @@ class CHIP8 {
 
     }
 
-    loadRom(romBinary){
-        if(romBinary.length > 0xfff){
+    loadRom(romBinary) {
+        if (romBinary.length > 0xfff) {
             alert("File too big");
             return;
         }
@@ -129,68 +129,79 @@ class CHIP8 {
     }
 
     step() {
-        this.decode(this.RAM[this.programCounter]);
+        var opcode = this.RAM[this.programCounter] << 8;
+        opcode |= this.RAM[this.programCounter + 1];
         this.programCounter += 2;
+        this.decode(opcode);
     }
-    decode(pc) {
-        var inst = this.RAM[this.programCounter] << 8;
-        inst |= this.RAM[this.programCounter+1];
-        switch ((inst >> 0xc)) {
+    decode(opcode) {
+
+        switch ((opcode >> 0xc)) {
             case 0x0:
                 {
-                    this.i00EE();
+                    switch (opcode & 0x00ff) {
+                        case 0xE0:
+                            {
+                                this.i00E0();
+                            }
+                            break;
+                        case 0xEE:
+                            {
+                                this.i00EE();
+                            }
+                    }
                 }
                 break;
             case 0x1:
                 {
-                    this.i1nnn(inst & 0x0fff);
+                    this.i1nnn(opcode & 0x0fff);
                 }
                 break;
             case 0x2:
                 {
-                    this.i2nnn(inst & 0x0fff);
+                    this.i2nnn(opcode & 0x0fff);
                 }
                 break;
             case 0x3:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var kk = (inst & 0x00ff);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var kk = (opcode & 0x00ff);
                     this.i3xkk(x, kk);
                 }
                 break;
             case 0x4:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var kk = (inst & 0x00ff);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var kk = (opcode & 0x00ff);
                     this.i4xkk(x, kk);
                 }
                 break;
             case 0x5:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var y = (inst & 0x00f0) >> 2;
+                    var x = (opcode & 0x0f00) >> 8;
+                    var y = (opcode & 0x00f0) >> 4;
                     this.i5xy0(x, y);
                 }
                 break;
             case 0x6:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var kk = (inst & 0x00ff);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var kk = (opcode & 0x00ff);
                     this.i6xkk(x, kk);
                 }
                 break;
             case 0x7:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var kk = (inst & 0x00ff);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var kk = (opcode & 0x00ff);
                     this.i7xkk(x, kk);
                 }
                 break;
             case 0x8:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var y = (inst & 0x00f0) >> 2;
-                    switch (inst & 0x000f) {
+                    var x = (opcode & 0x0f00) >> 8;
+                    var y = (opcode & 0x00f0) >> 4;
+                    switch (opcode & 0x000f) {
                         case 0:
                             {
                                 this.i8xy0(x, y);
@@ -241,40 +252,40 @@ class CHIP8 {
                 break;
             case 0x9:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var y = (inst & 0x00f0) >> 2;
+                    var x = (opcode & 0x0f00) >> 8;
+                    var y = (opcode & 0x00f0) >> 4;
                     this.i9xy0(x, y);
                 }
                 break;
             case 0xA:
                 {
-                    this.iAnnn(inst & 0x0fff);
+                    this.iAnnn(opcode & 0x0fff);
                 }
                 break;
             case 0xB:
                 {
-                    this.iBnnn(inst & 0x0fff);
+                    this.iBnnn(opcode & 0x0fff);
                 }
                 break;
             case 0xC:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var kk = (inst & 0x00ff);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var kk = (opcode & 0x00ff);
                     this.iCxkk(x, kk);
                 }
                 break;
             case 0xD:
                 {
-                    var x = (inst & 0x0f00) >> 4;
-                    var y = (inst & 0x00f0) >> 2;
-                    var n = (inst & 0x000f);
+                    var x = (opcode & 0x0f00) >> 8;
+                    var y = (opcode & 0x00f0) >> 4;
+                    var n = (opcode & 0x000f);
                     this.iDxyn(x, y, n);
                 }
                 break;
             case 0xE:
                 {
-                    var x = inst & 0x0f00;
-                    switch (inst & 0x00ff) {
+                    var x = opcode & 0x0f00;
+                    switch (opcode & 0x00ff) {
                         case 0x9E:
                             {
                                 this.iEx9E(x)
@@ -288,10 +299,10 @@ class CHIP8 {
                     }
                 }
                 break;
-            case 0xE:
+            case 0xF:
                 {
-                    var x = inst & 0x0f00;
-                    switch (inst & 0x00ff) {
+                    var x = opcode & 0x0f00;
+                    switch (opcode & 0x00ff) {
                         case 0x07:
                             {
                                 this.iFx07(x)
@@ -343,6 +354,9 @@ class CHIP8 {
         }
     }
 
+    i00E0(){
+        this.display.fill(0);
+    }
     i00EE() {
         this.programCounter = this.stackPoinster[this.stackPoinster];
         this.stackPoinster--;
@@ -479,7 +493,7 @@ class CHIP8 {
         x = this.gpReg[x];
         y = this.gpReg[y];
         for (var i = 0; i < n; i++) {
-            var displayIndex = x + ((y+i)*64);
+            var displayIndex = x + ((y + i) * 64);
             this.display[displayIndex] ^= this.RAM[this.iRegister + i];
         }
     }

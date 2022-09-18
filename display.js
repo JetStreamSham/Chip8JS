@@ -68,7 +68,7 @@ class Display {
 
     coordFromIndex(index) {
         var x = index % 64;
-        var y = index / 64;
+        var y = Math.floor(index / 64);
 
         return {
             x,
