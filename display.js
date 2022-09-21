@@ -14,8 +14,6 @@ class Display {
         }
     }
 
-
-
     initGL() {
         this.posBuffer = this.ctx.createBuffer();
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.posBuffer);
@@ -66,6 +64,9 @@ class Display {
         }
     }
 
+    indexFromCoord(x, y) {
+        return x + (y * 64);
+    }
     coordFromIndex(index) {
         var x = index % 64;
         var y = Math.floor(index / 64);
@@ -76,18 +77,32 @@ class Display {
         };
     }
 
+    drawPixel(x, y, colorIndex) {
+        this.ctx.fillStyle = this.color[colorIndex];
+        this.ctx.fillRect(x * this.pixelSize.x, y * this.pixelSize.y, this.pixelSize.x, this.pixelSize.y);
+    }
+
+    drawPixelByIndex(index, colorIndex) {
+        var coord = this.coordFromIndex(index);
+        this.ctx.fillStyle = this.color[colorIndex];
+        this.ctx.fillRect(coord.x * this.pixelSize.x, coord.y * this.pixelSize.y, this.pixelSize.x, this.pixelSize.y);
+    }
+
+    setPixelBuffer(index) {
+        this.displayData[index] ^= 1;
+    }
+
+    setPixelBufferXY(x, y) {
+        var index = this.indexFromCoord(x, y);
+        this.setPixelBuffer(index);
+    }
+
     draw2D() {
         for (var i = 0; i < this.displayData.length; i++) {
             var coord = this.coordFromIndex(i);
-            this.ctx.fillStyle = this.color[this.displayData[i]];
-            this.ctx.fillRect(coord.x * this.pixelSize.x ,coord.y *this.pixelSize.y,this.pixelSize.x,this.pixelSize.y);
+            var colorIndex = this.displayData[i];
+            this.drawPixel(coord.x, coord.y, colorIndex);
         }
-    }
-    drawGL() {
-        this.ctx.clearColor(0, 0, 0, 1);
-        this.ctx.clear(this.ctx.COLOR_BUFFER_BIT | this.ctx.DEPTH_BUFFER_BIT);
-        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.posBuffer);
-
     }
 
     draw() {

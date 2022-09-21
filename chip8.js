@@ -10,7 +10,7 @@ class CHIP8 {
         this.soundRegister = 0
         this.programCounter = 0x200
 
-        this.stackPoinster = 0
+        this.stackPointer = -1;
         this.stack = new Array(16)
         this.keys = new Array(16)
 
@@ -302,6 +302,7 @@ class CHIP8 {
             case 0xF:
                 {
                     var x = opcode & 0x0f00;
+                    x >>= 8;
                     switch (opcode & 0x00ff) {
                         case 0x07:
                             {
@@ -354,12 +355,12 @@ class CHIP8 {
         }
     }
 
-    i00E0(){
+    i00E0() {
         this.display.fill(0);
     }
     i00EE() {
-        this.programCounter = this.stackPoinster[this.stackPoinster];
-        this.stackPoinster--;
+        this.programCounter = this.stack[this.stackPointer];
+        this.stackPointer--;
     }
 
     i1nnn(nnn) {
@@ -367,8 +368,8 @@ class CHIP8 {
     }
 
     i2nnn(nnn) {
-        this.stackPoinster++;
-        this.stack[this.stackPoinster] = this.programCounter;
+        this.stackPointer++;
+        this.stack[this.stackPointer] = this.programCounter;
         this.programCounter = nnn;
     }
 
@@ -379,7 +380,7 @@ class CHIP8 {
     }
 
     i4xkk(x, kk) {
-        if (x != kk) {
+        if (this.gpReg[x] != kk) {
             this.programCounter += 2;
         }
 
@@ -421,17 +422,17 @@ class CHIP8 {
         this.gpReg[x] += this.gpReg[y];
         if (this.gpReg[x] > 0xff) {
             this.gpReg[0xf] = 1;
-            this.gpReg[x] = 0;
         }
+        this.gpReg[x] &= 0xff;
     }
 
     i8xy5(x, y) {
         this.gpReg[0xf] = 0;
         if (this.gpReg[x] > this.gpReg[y]) {
             this.gpReg[0xf] = 1;
-            this.gpReg[x] = 0;
         }
         this.gpReg[x] -= this.gpReg[y];
+        this.gpReg[x] &= 0xff;
     }
 
     i8xy6(x, y) {
@@ -439,9 +440,9 @@ class CHIP8 {
             this.gpReg[x] = this.gpReg[y];
         }
 
-        v16[0xf] = 0;
-        if (v16[x] & 1 == 1) {
-            v16[0xf] = 1;
+        this.gpReg[0xf] = 0;
+        if (this.gpReg[x] & 0x80 == 1) {
+            this.gpReg[0xf] = 1;
         }
         this.gpReg[x] >>= 1;
 
@@ -461,11 +462,12 @@ class CHIP8 {
             this.gpReg[x] = this.gpReg[y];
         }
 
-        v16[0xf] = 0;
-        if (v16[x] & (1 << 7) == 1) {
-            v16[0xf] = 1;
+        this.gpReg[0xf] = 0;
+        if (this.gpReg[x] & (1 << 7) == 1) {
+            this.gpReg[0xf] = 1;
         }
         this.gpReg[x] <<= 1;
+        this.gpReg[x] &= 0xff;
     }
 
     i9xy0(x, y) {
@@ -490,14 +492,24 @@ class CHIP8 {
 
     iDxyn(x, y, n) {
         this.gpReg[0xf] = 0;
-        x = this.gpReg[x];
-        y = this.gpReg[y];
+        var xPos = this.gpReg[x];
+        var yPos = this.gpReg[y];
         for (var i = 0; i < n; i++) {
-            var displayIndex = x + ((y + i) * 64);
-            this.display[displayIndex] ^= this.RAM[this.iRegister + i];
+            var byte = this.RAM[this.iRegister + i];
+            var xOffset = 0;
+            for (var bitIndex = 7; bitIndex > -1; bitIndex--) {
+                var spriteBit = (byte & (1 << bitIndex));
+                spriteBit >>= bitIndex;
+                var displayIndex = (xPos + xOffset++) + (yPos + i) * 64;
+
+                if (this.display[displayIndex] == 1 && spriteBit == 1) {
+                    this.gpReg[0xf] = 1;
+                }
+
+                this.display[displayIndex] ^= spriteBit;
+            }
         }
     }
-
 
     iEx9E(x) {
         if (this.keys[this.gpReg[x]]) {
@@ -545,19 +557,19 @@ class CHIP8 {
     }
 
     iFx33(x) {
-        this.gpReg[this.iRegister] = Math.floor(this.gpReg[x] % 10)
-        this.gpReg[this.iRegister + 1] = Math.floor((this.gpReg[x] / 10) % 10)
-        this.gpReg[this.iRegister + 2] = Math.floor((this.gpReg[x] / 100) % 10)
+        this.RAM[this.iRegister + 2] = Math.floor(this.gpReg[x] % 10)
+        this.RAM[this.iRegister + 1] = Math.floor((this.gpReg[x] / 10) % 10)
+        this.RAM[this.iRegister] = Math.floor((this.gpReg[x] / 100) % 10)
     }
 
     iFx55(x) {
-        for (var i = 0; i < 16; i++) {
+        for (var i = 0; i <= x; i++) {
             this.RAM[this.iRegister + i] = this.gpReg[i];
         }
     }
 
     iFx65(x) {
-        for (var i = 0; i < 16; i++) {
+        for (var i = 0; i <= x; i++) {
             this.gpReg[i] = this.RAM[this.iRegister + i];
         }
     }

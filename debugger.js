@@ -111,7 +111,7 @@ function UpdateRegisterDisplay() {
         var value = "";
         switch (i) {
             default:
-                value = i.toString(16);
+                value = chip8.gpReg[i].toString(16);
                 break;
             case 0x10:
                 value = chip8.programCounter.toString(16);
@@ -142,7 +142,7 @@ function UpdateMemoryDisplay() {
 function UpdateDisplay() {
     UpdateRegisterDisplay();
     UpdateStackDisplay();
-    UpdateMemoryDisplay();
+    // UpdateMemoryDisplay();
 }
 
 
@@ -211,7 +211,7 @@ function Init() {
         stack[i] = stackVal;
     }
 
-    SetupMemoryTable();
+    // SetupMemoryTable();
     UpdateDisplay();
 }
 

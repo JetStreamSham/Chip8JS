@@ -128,7 +128,7 @@ function Decode(opcode) {
             {
                 var x = (opcode & 0x0f00) >> 8;
                 var y = (opcode & 0x00f0) >> 4;
-                variables.innerText = "v" + x.toString(16) + "," + y.toString(16);
+                variables.innerText = "v" + x.toString(16) + ",v" + y.toString(16);
 
                 switch (opcode & 0x000f) {
                     case 0:
@@ -212,7 +212,7 @@ function Decode(opcode) {
         case 0xD:
             {
                 var x = (opcode & 0x0f00) >> 8;
-                var y = (opcode & 0x00f0) >> 8;
+                var y = (opcode & 0x00f0) >> 4;
                 var n = (opcode & 0x000f);
                 element.innerText = "DRW";
                 variables.innerText = "v" + x.toString(16) + ",v" + y.toString(16)+"," + n.toString(16);
@@ -247,6 +247,7 @@ function Decode(opcode) {
             {
                 element.innerText = "LD";
                 var x = opcode & 0x0f00;
+                x>>=8;
                 switch (opcode & 0x00ff) {
                     default:
                         {
