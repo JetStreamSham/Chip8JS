@@ -1,0 +1,51 @@
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  height: 24px;
+}
+
+.tab {
+  overflow: hidden;
+  float: left;
+}
+
+.tab button {
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 100%;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  height: 100%;
+}
+
+#selectRom {
+  height: 100%;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #ccc;
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  box-sizing: border-box;
+  width: 100%;
+}

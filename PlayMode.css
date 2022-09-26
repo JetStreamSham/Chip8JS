@@ -1,0 +1,38 @@
+.PlayMode {
+    display: flex;
+    flex-direction: row;
+}
+
+.Input {
+    width: 100%;
+}
+
+.Input * {
+    width: 100%;
+    height: 100%;
+}
+
+.Input button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.Input td {
+    padding: 0;
+    margin: 0;
+    width: 20%;
+    height: 20%;
+}
+
+.Input tr{
+    padding: 0;
+    margin: 0;
+    width: 20%;
+    height: 20%;
+}
+
+#displayCanvas{
+    background-color: gray;
+}

@@ -1,0 +1,134 @@
+<html>
+
+<head>
+    <title>
+        CHIP8 Emulator
+    </title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="resizable.css" />
+    <link rel="stylesheet" href="DebugMode.css" />
+    <link rel="stylesheet" href="PlayMode.css" />
+    <link rel="stylesheet" href="tabs.css" />
+</head>
+
+<body >
+    <ul class="menu">
+        <li class="tab">
+            <button class="tablinks" onclick="ChangeTab(event, 'PlayTab')">Play</button>
+            <button class="tablinks" onclick="ChangeTab(event, 'EditTab')">Edit</button>
+            <button class="tablinks" onclick="ChangeTab(event, 'DebugTab',onDebug)">Debug</button>
+        </li>
+
+        <li class="settings">
+            <input type="file" hidden="hidden" id="romFileLoader" onchange="LoadRom()" />
+            <select onchange="SelectRom()" id="selectRom">
+                <option selected style="text-align: center;" value="-1">
+                    <b>
+                        ----Select a ROM----
+                    </b>
+                </option>
+                <option value="0">
+                    Load ROM from file
+                </option>
+                <option value="1">
+                    Load ROM from Editor
+                </option>
+            </select>
+        </li>
+        <li class="settings">
+            <input type="range" id="ipsRange" value="10" min="1" max="50" />
+        </li>
+
+    </ul>
+
+
+    <div id="PlayTab" class="tabcontent">
+        <div class="PlayMode">
+            <div class="Chip8Display" id="Chip8Display">
+                <canvas id="displayCanvas" width="768" height="384"></canvas>
+            </div>
+            <div class="Input">
+                <table cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td><button onmouseup="KeyReleased(0x1)" onclick="KeyPressed(0x1)">1</button
+                                    onmouseup="KeyReleased(0x1)"></td>
+                            <td><button onmouseup="KeyReleased(0x2)" onclick="KeyPressed(0x2)">2</button
+                                    onmouseup="KeyReleased(0x2)"></td>
+                            <td><button onmouseup="KeyReleased(0x3)" onclick="KeyPressed(0x3)">3</button
+                                    onmouseup="KeyReleased(0x3)"></td>
+                            <td><button onmouseup="KeyReleased(0xc)" onclick="KeyPressed(0xc)">C</button
+                                    onmouseup="KeyReleased(0xc)"></td>
+                        </tr>
+                        <tr>
+                            <td><button onmouseup="KeyReleased(0x4)" onclick="KeyPressed(0x4)">4</button
+                                    onmouseup="KeyReleased(0x4)"></td>
+                            <td><button onmouseup="KeyReleased(0x5)" onclick="KeyPressed(0x5)">5</button
+                                    onmouseup="KeyReleased(0x5)"></td>
+                            <td><button onmouseup="KeyReleased(0x6)" onclick="KeyPressed(0x6)">6</button
+                                    onmouseup="KeyReleased(0x6)"></td>
+                            <td><button onmouseup="KeyReleased(0xd)" onclick="KeyPressed(0xd)">D</button
+                                    onmouseup="KeyReleased(0xd)"></td>
+                        </tr>
+                        <tr>
+                            <td><button onmouseup="KeyReleased(0x7)" onclick="KeyPressed(0x7)">7</button
+                                    onmouseup="KeyReleased(0x7)"></td>
+                            <td><button onmouseup="KeyReleased(0x8)" onclick="KeyPressed(0x8)">8</button
+                                    onmouseup="KeyReleased(0x8)"></td>
+                            <td><button onmouseup="KeyReleased(0x9)" onclick="KeyPressed(0x9)">9</button
+                                    onmouseup="KeyReleased(0x9)"></td>
+                            <td><button onmouseup="KeyReleased(0xe)" onclick="KeyPressed(0xe)">E</button
+                                    onmouseup="KeyReleased(0xe)"></td>
+                        </tr>
+                        <tr>
+                            <td><button onmouseup="KeyReleased(0xa)" onclick="KeyPressed(0xa)">A</button
+                                    onmouseup="KeyReleased(0xa)"></td>
+                            <td><button onmouseup="KeyReleased(0x0)" onclick="KeyPressed(0x0)">0</button
+                                    onmouseup="KeyReleased(0x0)"></td>
+                            <td><button onmouseup="KeyReleased(0xb)" onclick="KeyPressed(0xb)">B</button
+                                    onmouseup="KeyReleased(0xb)"></td>
+                            <td><button onmouseup="KeyReleased(0xf)" onclick="KeyPressed(0xf)">F</button
+                                    onmouseup="KeyReleased(0xf)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="EditTab" class="tabcontent">
+    </div>
+
+    <div id="DebugTab"  class="tabcontent">
+        <div id="DebugContainer" class="DebugMode" >
+            <div class="resizable" data-direction="vertical">
+                <div class="g1">
+                    GROUP 1
+                </div>
+                <div class="g2">
+                    GROUP 2
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="resizable.js"></script>
+    <script src="tabs.js"></script>
+
+    <script>
+        var debuggerResizable; 
+
+        function onDebug(){
+            if(debuggerResizable == null){
+                let parentElement = document.getElementById("DebugContainer");
+                debuggerResizable = new Resizable(parentElement);
+            }
+        }
+        
+    </script>
+</body>
+
+</html>
