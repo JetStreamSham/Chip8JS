@@ -5,18 +5,15 @@
         CHIP8 Emulator
     </title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="resizable.css" />
-    <link rel="stylesheet" href="DebugMode.css" />
-    <link rel="stylesheet" href="PlayMode.css" />
     <link rel="stylesheet" href="tabs.css" />
 </head>
 
 <body>
     <ul class="menu">
         <li class="tab">
-            <button class="tablinks" onclick="ChangeTab(event, 'PlayTab')">Play</button>
-            <button class="tablinks" onclick="ChangeTab(event, 'EditTab')">Edit</button>
-            <button class="tablinks" onclick="ChangeTab(event, 'DebugTab',onDebug)">Debug</button>
+            <button class="tablinks" onclick="ChangeTab(event, 'Play',onTabChange)">Play</button>
+            <button class="tablinks" onclick="ChangeTab(event, 'Edit',onTabChange)">Edit</button>
+            <button class="tablinks" onclick="ChangeTab(event, 'Debug',onTabChange)">Debug</button>
         </li>
 
         <li class="settings">
@@ -49,10 +46,8 @@
     </div>
 
     <div id="DebugTab" class="tabcontent">
-        <div id="DebugContainer" class="DebugMode">
-        </div>
-
     </div>
+
     <div id="DisasmTab" class="tabcontent">
     </div>
 
@@ -60,13 +55,23 @@
     <script src="tabs.js"></script>
 
     <script>
-        var debuggerResizable;
 
-        function onDebug() {
-            if (debuggerResizable == null) {
-                let parentElement = document.getElementById("resizableContainer");
-                debuggerResizable = new Resizable(parentElement);
+        var tabs = [];
+        tabs["PlayTab"] = null;
+        tabs["EditTab"] = null;
+        tabs["DebugTab"] = null;
+        tabs["DisasmTab"] = null;
+
+
+        function onTabChange(event,tabName) {
+            if(tabs[tabName]==null){
+                let tab = document.createElement("iframe");
+                let tabContainer = document.getElementById(tabName);
+                tabContainer.appendChild(tab);
+                tab.setAttribute("src","../"+tabName+"Tab"+"/"+tabName+"Tab"+".html");                
             }
+
+
         }
 
     </script>
