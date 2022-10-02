@@ -1,52 +1,51 @@
-<div id="PlayMode" class="PlayMode">
-<link rel="stylesheet" src="PlayTab.css"/>
-    <div class="Chip8Display" id="Chip8Display">
-        <canvas id="displayCanvas" width="768" height="384"></canvas>
-    </div>
-    <div class="Input">
-        <table cellpadding="0" cellspacing="0">
-            <tbody>
-                <tr>
-                    <td><button onmouseup="KeyReleased(0x1)" onclick="KeyPressed(0x1)">1</button
-                            onmouseup="KeyReleased(0x1)"></td>
-                    <td><button onmouseup="KeyReleased(0x2)" onclick="KeyPressed(0x2)">2</button
-                            onmouseup="KeyReleased(0x2)"></td>
-                    <td><button onmouseup="KeyReleased(0x3)" onclick="KeyPressed(0x3)">3</button
-                            onmouseup="KeyReleased(0x3)"></td>
-                    <td><button onmouseup="KeyReleased(0xc)" onclick="KeyPressed(0xc)">C</button
-                            onmouseup="KeyReleased(0xc)"></td>
-                </tr>
-                <tr>
-                    <td><button onmouseup="KeyReleased(0x4)" onclick="KeyPressed(0x4)">4</button
-                            onmouseup="KeyReleased(0x4)"></td>
-                    <td><button onmouseup="KeyReleased(0x5)" onclick="KeyPressed(0x5)">5</button
-                            onmouseup="KeyReleased(0x5)"></td>
-                    <td><button onmouseup="KeyReleased(0x6)" onclick="KeyPressed(0x6)">6</button
-                            onmouseup="KeyReleased(0x6)"></td>
-                    <td><button onmouseup="KeyReleased(0xd)" onclick="KeyPressed(0xd)">D</button
-                            onmouseup="KeyReleased(0xd)"></td>
-                </tr>
-                <tr>
-                    <td><button onmouseup="KeyReleased(0x7)" onclick="KeyPressed(0x7)">7</button
-                            onmouseup="KeyReleased(0x7)"></td>
-                    <td><button onmouseup="KeyReleased(0x8)" onclick="KeyPressed(0x8)">8</button
-                            onmouseup="KeyReleased(0x8)"></td>
-                    <td><button onmouseup="KeyReleased(0x9)" onclick="KeyPressed(0x9)">9</button
-                            onmouseup="KeyReleased(0x9)"></td>
-                    <td><button onmouseup="KeyReleased(0xe)" onclick="KeyPressed(0xe)">E</button
-                            onmouseup="KeyReleased(0xe)"></td>
-                </tr>
-                <tr>
-                    <td><button onmouseup="KeyReleased(0xa)" onclick="KeyPressed(0xa)">A</button
-                            onmouseup="KeyReleased(0xa)"></td>
-                    <td><button onmouseup="KeyReleased(0x0)" onclick="KeyPressed(0x0)">0</button
-                            onmouseup="KeyReleased(0x0)"></td>
-                    <td><button onmouseup="KeyReleased(0xb)" onclick="KeyPressed(0xb)">B</button
-                            onmouseup="KeyReleased(0xb)"></td>
-                    <td><button onmouseup="KeyReleased(0xf)" onclick="KeyPressed(0xf)">F</button
-                            onmouseup="KeyReleased(0xf)"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<html>
+
+<head>
+        <meta charset="UTF-8" />
+
+</head>
+
+<body>
+        <div id="PlayMode" class="PlayMode">
+                <link rel="stylesheet" href="PlayTab.css" />
+                <div class="Chip8Display" id="Chip8Display">
+                        <canvas id="displayCanvas" width="768" height="384"></canvas>
+                </div>
+                <div class="Input">
+                        <table cellpadding="0" cellspacing="0">
+                                <tbody>
+                                        <tr>
+                                                <td><button data-keynumber="1">1</button></td>
+                                                <td><button data-keynumber="2">2</button></td>
+                                                <td><button data-keynumber="3">3</button></td>
+                                                <td><button data-keynumber="c">C</button></td>
+                                        </tr>
+                                        <tr>
+                                                <td><button data-keynumber="4">4</button></td>
+                                                <td><button data-keynumber="5">5</button></td>
+                                                <td><button data-keynumber="6">6</button></td>
+                                                <td><button data-keynumber="d">D</button></td>
+                                        </tr>
+                                        <tr>
+                                                <td><button data-keynumber="7">7</button></td>
+                                                <td><button data-keynumber="8">8</button></td>
+                                                <td><button data-keynumber="9">9</button></td>
+                                                <td><button data-keynumber="e">E</button></td>
+                                        </tr>
+                                        <tr>
+                                                <td><button data-keynumber="a">A</button></td>
+                                                <td><button data-keynumber="0">0</button></td>
+                                                <td><button data-keynumber="b">B</button></td>
+                                                <td><button data-keynumber="f">F</button></td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+
+
+</body>
+
+
+
+</html>

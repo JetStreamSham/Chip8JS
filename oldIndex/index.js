@@ -1,16 +1,29 @@
-var tabNames = ["Play", "Edit", "Debug", "Disasm"];
-var tabs = [];
-tabs["Play"] = 0;
-tabs["Edit"] = 0;
-tabs["Debug"] = 0;
-tabs["Disasm"] = 0;
 
+var canvas = document.getElementById("displayCanvas");
+var playButton = document.getElementById("PlayButton");
+var ipsSlider = document.getElementById("ipsSlider");
+var selectRom = document.getElementById("selectRom");
+var romFileLoader = document.getElementById("romFileLoader");
 
-function onTabChange(event, tabName) {
+var chip8 = new CHIP8(null);
+var display = new Display(canvas, "2d",chip8.display);
 
+mainLoop = new MainLoop(() => {
+    chip8.step();
+    display.draw();
+});
+
+var paused = true;
+function Toggle() {
+    paused = !paused;
+
+    playButton.textContent = "Pause";
+    if (paused) {
+        playButton.textContent = "Play";
+    }
+
+    mainLoop.toggle();
 }
-
-
 function KeyPressed(key) {
     keyPress = true;
     chip8.keys[key] = 1;
@@ -24,7 +37,6 @@ function KeyReleased(key) {
 function UpdateIPS() {
     mainLoop.instructionsPerSecond = ipsSlider.value;
 }
-
 function SelectRom() {
     var index = selectRom.selectedIndex;
     switch (index) {
@@ -55,24 +67,4 @@ function LoadRom() {
 }
 
 
-function setupPlayTab() {
-    let playIFrame = document.getElementById("PlayTabIFrame");
-    let contentDoc = playIFrame.contentDocument;
-    let buttons = contentDoc.getElementsByTagName("button");
-
-    for (let i = 0; i < buttons.length; i++) {
-        let button = buttons[i]
-        let keyNumber = button.getAttribute("data-keynumber");
-
-        if (keyNumber != null) {
-            button.onclick = () => { KeyPressed(keyNumber) };
-            button.onmouseup = () => { KeyReleased(keyNumber) };
-        }
-    }
-
-}
-
-function setupDebugTab(){
-    
-}
 

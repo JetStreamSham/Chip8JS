@@ -11,7 +11,7 @@ function ChangeTab(evt, tabName,callback) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
   
-    document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName+"Tab").style.display = "block";
     evt.currentTarget.className += " active";
 
 
