@@ -14,11 +14,63 @@
         <div id="DebugMode" class="DebugMode">
                 <div class="MemDispDisa">
                         <div class="DispDisa">
-                                <div class="Display">
-                                        <div class="DisplayContainer">
+                                <div class="DisplayInput">
+                                        <div class="Display">
 
                                                 <canvas class="DbgCanvas" id="DbgCanvas" width="256"
                                                         height="128"></canvas>
+                                                <div>
+                                                        <button id="ToggleButton" onclick="Toggle()"> PLAY
+                                                        </button>
+                                                        <button id="StepButton" onclick="Step()"> STEP </button>
+                                                </div>
+
+                                        </div>
+                                        <div class="Input">
+                                                <table cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td><button data-keynumber="1">1</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="2">2</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="3">3</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="c">C</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><button data-keynumber="4">4</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="5">5</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="6">6</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="d">D</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><button data-keynumber="7">7</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="8">8</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="9">9</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="e">E</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><button data-keynumber="a">A</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="0">0</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="b">B</button>
+                                                                        </td>
+                                                                        <td><button data-keynumber="f">F</button>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
                                         </div>
                                 </div>
                                 <div class="Disassembly">
@@ -33,14 +85,17 @@
                 </div>
                 <div class="RegsStack">
                         <div class="Registers">
-                                Registers
+                                <div class="RegisterContainer" id="RegisterContainer"></div>
+                                <div class="RegisterMiscContainer" id="RegisterMiscContainer"></div>
                         </div>
                         <div class="Stack">
-                                Stack
+                                <div id="StackContainer" class="StackContainer">
+                                </div>
                         </div>
                 </div>
 
         </div>
+        <script src="disassembler.js"></script>
         <script src="debugger.js"></script>
 </body>
 

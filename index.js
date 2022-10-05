@@ -73,6 +73,21 @@ function setupPlayTab() {
 }
 
 function setupDebugTab(){
-    
+    let dbgIFrame = document.getElementById("DebugTabIFrame");
+    let contentDoc = dbgIFrame.contentDocument;
+    let inputHolder = contentDoc.getElementsByClassName("Input")[0];
+
+    let buttons = contentDoc.getElementsByTagName("button");
+    for (let i = 0; i < buttons.length; i++) {
+        let button = buttons[i]
+        let keyNumber = button.getAttribute("data-keynumber");
+
+        if (keyNumber != null) {
+            button.onclick = () => { KeyPressed(keyNumber) };
+            button.onmouseup = () => { KeyReleased(keyNumber) };
+        }
+    }
+
+    _debugger = contentDoc._debugger;
 }
 
