@@ -1,15 +1,21 @@
 class Debugger {
     constructor() {
         this.active = false;
+        this.canvas = document.getElementById("DbgCanvas");
         this.SetupRegisterDisplay();
         this.SetupStackDisplay();
     }
 
 
-    SetChip8(chip8){
+    SetChip8(chip8) {
         this.chip8 = chip8;
+
+        if (this.display == null) {
+            this.display = new Display(this.canvas,"2d",chip8.display);
+        }
+        
         let disasmContainer = document.getElementById("DisassemblyContainer");
-        this.disassembler = new Disassembler(chip8,disasmContainer)
+        this.disassembler = new Disassembler(chip8, disasmContainer)
     }
 
 
@@ -76,25 +82,25 @@ class Debugger {
             return;
         for (var i = 0; i < this.registers.length; i++) {
             var value = "";
-            value = chip8.gpReg[i].toString(16);
+            value = this.chip8.gpReg[i].toString(16);
             this.registers[i].textContent = "V" + i.toString(16) + ":0x" + value.toString(16);
         }
 
         //program counter
-        this.miscRegisters[0].textContent = "PC" + ":0x" + chip8.programCounter.toString(16);
+        this.miscRegisters[0].textContent = "PC" + ":0x" + crossPageData.chip8.programCounter.toString(16);
         //I register
-        this.miscRegisters[1].textContent = "I" + ":0x" + chip8.iRegister.toString(16);
+        this.miscRegisters[1].textContent = "I" + ":0x" + crossPageData.chip8.iRegister.toString(16);
         //Stack pointer
-        this.miscRegisters[2].textContent = "SP" + ":0x" + chip8.stackPointer.toString(16);
+        this.miscRegisters[2].textContent = "SP" + ":0x" + crossPageData.chip8.stackPointer.toString(16);
         //Delay register
-        this.miscRegisters[3].textContent = "Delay" + ":0x" + chip8.delayRegister.toString(16);
+        this.miscRegisters[3].textContent = "Delay" + ":0x" + crossPageData.chip8.delayRegister.toString(16);
         //Sound register
-        this.miscRegisters[4].textContent = "Sound" + ":0x" + chip8.soundRegister.toString(16);
+        this.miscRegisters[4].textContent = "Sound" + ":0x" + crossPageData.chip8.soundRegister.toString(16);
 
     }
 
 
-    
+
 
     SetupMemoryDisplay() {
 
@@ -106,46 +112,61 @@ class Debugger {
     }
 
     UpdateDebuggerDisplay() {
+        if (!this.active)
+            return;
         this.UpdateRegisterDisplay();
         this.UpdateStackDisplay();
         this.UpdateMemoryDisplay();
+        this.disassembler.Focus();
     }
 
-    OnActive(){
+    OnActivate() {
+        this.active = true;
+        this.display.displayData = crossPageData.chip8.display;
         this.UpdateDebuggerDisplay();
+    }
+
+    OnDeactivate() {
+        this.active = false;
+    }
+
+    OnRomChange() {
+        this.disassembler.Reset();
     }
 
 }
 
 function Step() {
-    paused = true;
-    playButton.textContent = "Play";
-    mainLoop.
-        chip8.step();
-    display.draw();
-    UpdateDebuggerDisplay();
+
+    toggleButton.textContent = "Play";
+    crossPageData.paused = true;
+    crossPageData.chip8.step();
+    _debugger.display.draw();
+    _debugger.UpdateDebuggerDisplay();
 }
 
 
 function Toggle() {
-    paused = !paused;
+    crossPageData.paused = !crossPageData.paused;
 
-    playButton.textContent = "Pause";
-    if (paused) {
-        playButton.textContent = "Play";
+    toggleButton.textContent = "Pause";
+    crossPageData.mainLoop.pause();
+    if (crossPageData.paused) {
+        toggleButton.textContent = "Play";
+        crossPageData.mainLoop.play();
     }
 
-    mainLoop.toggle();
 }
 
 function KeyPressed(key) {
-    keyPress = true;
-    chip8.keys[key] = 1;
+    crossPageData.chip8.keys[key] = 1;
 }
 
 function KeyReleased(key) {
-    keyPress = true;
-    chip8.keys[key] = 0;
+    crossPageData.chip8.keys[key] = 0;
 }
 
-_debugger =  new Debugger();
+
+var toggleButton = document.getElementById("ToggleButton");
+var stepButton = document.getElementById("StepButton");
+var _debugger = new Debugger();
