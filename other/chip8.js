@@ -12,7 +12,14 @@ class CHIP8 {
 
         this.stackPointer = -1;
         this.stack = new Array(16)
-        this.keys = new Array(16)
+        this.keys = new Array(17)
+
+        for(let i = 0; i < this.keys.length; i++){
+            this.keys[i] = {};
+
+            this.keys[i].pressed = 0;
+            this.keys[i].polledThisFrame = 0;
+        }
 
         var font = [0xF0,
             0x90,
@@ -118,6 +125,24 @@ class CHIP8 {
 
     }
 
+
+    KeyPressed(key) {
+
+        //checks if input should be stored until the frame is over
+        if (this.sameFrameInput)
+            return;
+
+        this.keys[key] = 1;
+        this.keyPress = true;
+
+        this.sameFrameInput = true;
+    }
+
+    KeyReleased(key) {
+        if (!this.newTick)
+            this.keys[key] = 0;
+        this.keyPress = false
+    }
     loadRom(romBinary) {
         if (romBinary.length > 0xfff) {
             alert("File too big");
@@ -528,15 +553,13 @@ class CHIP8 {
     }
 
     iFx0A(x) {
-        while (!keyPress) {
-            for (var i = 0; i < 16; i++) {
-                if (this.keys[i]) {
-                    this.gpReg[x] = i;
-                    keyPress = true;
-                }
+        for (var i = 0; i < 16; i++) {
+            if (this.keys[i]) {
+                this.gpReg[x] = i;
             }
         }
-
+        //dial programCounter back to this instruction address
+        this.programCounter -= 2;
     }
 
     iFx15(x) {

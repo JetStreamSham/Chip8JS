@@ -26,11 +26,11 @@ function Toggle() {
 }
 function KeyPressed(key) {
     keyPress = true;
-    chip8.keys[key] = 1;
+    chip8.KeyPressed();
 }
 function KeyReleased(key) {
     keyPress = true;
-    chip8.keys[key] = 0;
+    chip8.KeyReleased();
 }
 
 

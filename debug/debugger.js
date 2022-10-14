@@ -159,11 +159,11 @@ function Toggle() {
 }
 
 function KeyPressed(key) {
-    crossPageData.chip8.keys[key] = 1;
+    crossPageData.chip8.KeyPressed();
 }
 
 function KeyReleased(key) {
-    crossPageData.chip8.keys[key] = 0;
+    crossPageData.chip8.KeyReleased();
 }
 
 
