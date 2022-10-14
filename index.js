@@ -17,7 +17,8 @@ function tabTick() {
         case "Play":
             {
 
-                crossPageData.play.Tick();
+                crossPageData.chip8.step();
+                crossPageData.playDisplay.draw();
             }
             break;
         case "Debug":
@@ -81,10 +82,10 @@ function onTabChange(event, tabName) {
 
 
 function KeyPressed(key) {
-    crossPageData.chip8.keys[key] = 1;
+    crossPageData.chip8.KeyPressed();
 }
 function KeyReleased(key) {
-    crossPageData.chip8.keys[key] = 0;
+    crossPageData.chip8.KeyReleased();
 }
 
 
@@ -118,7 +119,7 @@ function LoadRom() {
         switch (crossPageData.activeTabName) {
             case "Play":
                 {
-
+                    crossPageData.mainLoop.start();
                 }
                 break;
             case "Debug":
@@ -156,6 +157,9 @@ function setupPlayTab() {
         }
     }
     contentWindow.crossPageData = crossPageData;
+    let playCanvas = contentDoc.getElementById("displayCanvas");
+    let playDisplay = new Display(playCanvas,"2d",crossPageData.chip8.display)
+    crossPageData.playDisplay = playDisplay;
 
 }
 
